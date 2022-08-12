@@ -1,0 +1,11 @@
+.wrapper{
+     margin-top: 18px;
+     text-align: center;
+     width: 100%;
+     height: fit-content;
+     border: 2px solid rgb(57, 9, 160);
+}
+
+.wrapper h1{
+     font-size: 22px;
+}

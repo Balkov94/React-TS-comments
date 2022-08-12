@@ -1,0 +1,41 @@
+
+.commentWrapper{
+     margin:auto;
+     width: 70%;
+     height: 160px;
+     /* overflow-y: auto; */
+     border: 2px solid gray;
+     display: flex;
+     flex-direction: column;
+     position: relative;
+
+}
+.titleContainer{
+     text-align: center;
+     width: 50%;
+     margin-left: auto;
+     margin-right: auto;
+     border-bottom: 2px solid gray;
+     margin-bottom: 12px;
+}
+
+.contentContainer{
+     width: 70%;
+     height: 70px;
+     margin-left: auto;
+     margin-right: auto;
+     overflow-y: auto;
+     background-color: rgb(54, 54, 54);
+
+}
+.radioBtnContainer{
+     position: absolute;
+     top: 0px;
+     left: 0px;
+}
+
+.btnsContainer{
+     position: absolute;
+     bottom: 0px;
+     right: 0px;
+}
