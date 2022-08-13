@@ -1,5 +1,5 @@
 import { debug } from "console";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { json } from "stream/consumers";
 import { IComment } from "../Comment/Comment";
 import CommentsWrapper, { IallComments } from "../CommentsWrapper/CommentsWrapper";
@@ -8,7 +8,6 @@ import styles from "./BlogForm.module.css";
 
 
 // Local storage initial data ______________________________________________________
-//toUTCString()_
 let c1 = new CommentClass("first", "first content", "active", "01.01.2001", "02.02.2022")
 let c2 = new CommentClass("second", "second content", "active", "22.22.2002", "22.22.2022")
 let c3 = new CommentClass("third", "third content", "active", "03.03.2003", "02.02.2022")
@@ -19,7 +18,7 @@ if (!localStorage.getItem("comments")) {
      localStorage.setItem("comments", JSON.stringify(commentsData));
 }
 else {
-     commentsData = JSON.parse(String(localStorage.getItem("comments"))).reverse();
+     commentsData = JSON.parse(String(localStorage.getItem("comments")));
 }
 //____________________________________________________________________________________
 
@@ -28,7 +27,10 @@ function BlogForm() {
      const [title, setTitle] = useState("");
      const [content, setContent] = useState("");
 
-     // get data from local storage
+     //  use ref to windwo.scrollTo()
+     // const ref = useRef(null);
+
+     // get data from l ocal storage
 
      const handleTitle = (event: any) => {
           setTitle(event.target.value);
@@ -43,24 +45,25 @@ function BlogForm() {
           const editComment: IComment = JSON.parse(String(localStorage.getItem("editComment")));
           if (editComment) {
                const [date, time] = [new Date().toLocaleTimeString(), new Date().toDateString()];
-               const timeOfModification = `${date}|${time}`;
+               const timeOfModification = `Edited on: ${date} ${time}`;
                const updatedComment = { ...editComment, title, content, timeOfModification };
                localStorage.removeItem("editComment")
 
                // update local storage data
                const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
-               oldLocalStorage.push(updatedComment);
+               oldLocalStorage.unshift(updatedComment);
                localStorage.setItem("comments", JSON.stringify(oldLocalStorage));
                //update comments state
                setComments([updatedComment, ...comments]);
+
           }
           else {
                const [date, time] = [new Date().toLocaleTimeString(), new Date().toDateString()];
-               const timeOfCreation = `${date}|${time}`;
+               const timeOfCreation = `Created on: ${date} ${time}`;
                const newComment = new CommentClass(title, content, "active", timeOfCreation, timeOfCreation);
                // update local storage data
                const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
-               oldLocalStorage.push(newComment);
+               oldLocalStorage.unshift(newComment);
                localStorage.setItem("comments", JSON.stringify(oldLocalStorage));
                //update comments state
                setComments([newComment, ...comments]);
@@ -70,7 +73,7 @@ function BlogForm() {
      }
 
      const editComment = (target?: number): void => {
-          const editedComment:IComment = JSON.parse(String(localStorage.getItem("comments")))
+          const editedComment: IComment = JSON.parse(String(localStorage.getItem("comments")))
                .find((c: IComment) => c.id === target)
 
           console.log(editedComment); //entire old obj
@@ -96,18 +99,23 @@ function BlogForm() {
 
      const changeCommentStatus = (target?: number): void => {
           const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
+          const commentIndex = oldLocalStorage.findIndex((comment: IComment) => comment.id === target)
           const comment: IComment = oldLocalStorage.find((c: IComment) => c.id === target)
           const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== target)
           comment.status = ((comment.status === "active") ? "suspended" : "active");
-          updatedLocalStorage.push(comment);
+          updatedLocalStorage.splice(commentIndex,0, comment);
           localStorage.setItem("comments", JSON.stringify(updatedLocalStorage));
 
-          setComments(comments => comments.map(c => {
-               if (c.id === target) {
-                    c.status = ((c.status === "active") ? "suspended" : "active");
-               }
-               return c;
-          }))
+          setComments(updatedLocalStorage)
+
+          // (* NOT WORKING) This doesn't work on first rendering ???
+          // setComments(comments => comments.map(c => {
+          //      // debugger;
+          //      if (c.id === target) {
+          //           c.status = ((c.status === "active") ? "suspended" : "active");
+          //      }
+          //      return c;
+          // }))
 
      }
 
@@ -117,11 +125,11 @@ function BlogForm() {
                     <form className={styles.form}>
                          <label htmlFor="title">Title</label>
                          <input value={title} onChange={handleTitle}
-                              type="text" name="title" id="title" />
+                              type="text" name="title" id="title"  maxLength={80}/>
 
                          <label htmlFor="content">Content</label>
                          <textarea value={content} onChange={handleContent}
-                              name="content" id="content" cols={30} rows={5}></textarea>
+                              name="content" id="content" cols={30} rows={5}  maxLength={512}></textarea>
                          <button onClick={handleEditorAddComments}>Save</button>
                     </form>
                </div>

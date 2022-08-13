@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IParentFunctions } from "../CommentsWrapper/CommentsWrapper";
 import { commentStatus } from "../interfaces/classesAndInterfaces";
 import styles from "./Comment.module.css"
@@ -26,7 +26,11 @@ function Comment(props: IComment & IParentFunctions) {
 
 
      const handleEditComment = (target: number) => {
+          debugger;
           props.parentEditFunction(target);
+          // main app is overflow-y auto !!! scrolllTO doesn't work
+          // window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+          
 
      }
 
@@ -67,9 +71,22 @@ function Comment(props: IComment & IParentFunctions) {
 
                </div>
 
+               <div className={styles.commentDatesContainer}>
+                         <span>{props.timeOfCreation}</span>
+                         {
+                              (props.timeOfCreation!==props.timeOfModification)?
+                             ( <span>{props.timeOfModification}</span>)
+                             :
+                             null
+                         }
+                        
+               </div>
+
                <div className={styles.btnsContainer}>
-                    <button onClick={() => handleEditComment(props.id)}>Edit</button>
-                    <button onClick={() => handleDeleteComment(props.id)}>Delete</button>
+                    <button className={styles.commentEditBtn} 
+                    onClick={() => handleEditComment(props.id)}>Edit</button>
+                    <button className={styles.commentDelBtn} 
+                    onClick={() => handleDeleteComment(props.id)}>Delete</button>
                </div>
           </div>
      );

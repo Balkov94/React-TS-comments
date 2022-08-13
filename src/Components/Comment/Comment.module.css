@@ -1,41 +1,94 @@
 
 .commentWrapper{
      margin:auto;
-     width: 70%;
-     height: 160px;
+     width: 80%;
+     height: 170px;
      /* overflow-y: auto; */
-     border: 2px solid gray;
+     border-left: 2px solid gray;
+     border-right: 2px solid gray;
+     border-radius: 15px;
      display: flex;
      flex-direction: column;
      position: relative;
+     margin-bottom: 44px;
+     background-color: rgb(75,70,109);
+     opacity: 0.8;
+    
 
 }
 .titleContainer{
+     padding-top: 12px;
      text-align: center;
-     width: 50%;
+     width: 90%;
      margin-left: auto;
      margin-right: auto;
-     border-bottom: 2px solid gray;
+     border-bottom: 2px solid rgb(45, 42, 42);
      margin-bottom: 12px;
+     max-height: 80px;
+
+     overflow: hidden;
+     word-wrap: break-word;
+     text-overflow: ellipsis;
+     font-style: italic;
+     font-family: "fantasy";
+    
 }
 
 .contentContainer{
-     width: 70%;
-     height: 70px;
+     width: 96%;
+     padding: 6px 16px;
+     text-align: left;
+     height: 84px;
      margin-left: auto;
      margin-right: auto;
      overflow-y: auto;
-     background-color: rgb(54, 54, 54);
+     background-color: rgb(29, 29, 29);
+     overflow-y: auto;
+     word-break: break-all;
+     border-radius: 5px;
 
 }
 .radioBtnContainer{
      position: absolute;
-     top: 0px;
+     top: -24px;
+     z-index: 10;
      left: 0px;
+     font-size: 20px;
 }
 
 .btnsContainer{
      position: absolute;
      bottom: 0px;
      right: 0px;
+     
+}
+.btnsContainer button{
+     background-color: rgb(23, 23, 23);
+     width: 100px;
+     height: 28px;
+     font-size: 16px;
+     border: none;
+     cursor: pointer;
+}
+
+.btnsContainer button:hover{
+     background-color: rgb(57, 57, 57);
+     
+}
+
+.commentDelBtn{
+     border-radius: 0px 0px 15px 0px;
+}
+.commentEditBtn{
+     border-radius: 15px 0px 0px 0px;
+}
+
+.commentDatesContainer{
+     position: absolute;
+     bottom: 4px;
+     left: 20px;
+     font-size: 14px;
+}
+.commentDatesContainer span{
+     padding-left: 14px;
 }

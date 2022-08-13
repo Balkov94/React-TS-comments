@@ -3,8 +3,17 @@
      height: 10vh;
      text-align: center;
      background-color: black;
-     border: 2px solid gray;
+     opacity: 0.8;
 }
 .header h1{
-     font-size: 34px;
+     padding-top: 14px;
+     padding-bottom: 18px;
+     font-size: 28px;
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.header img{
+     margin-left: 20px;
+     width: 36px;
+     vertical-align: middle;
 }

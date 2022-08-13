@@ -3,9 +3,24 @@
      text-align: center;
      width: 100%;
      height: fit-content;
-     border: 2px solid rgb(57, 9, 160);
 }
 
 .wrapper h1{
      font-size: 22px;
+}
+h1.sectionTitle{
+     font-size: 34px;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.filterContainer{
+     padding:16px;
+     padding-bottom: 32px;
+}
+.filterContainer select{
+     text-align: center;  
+     width: 250px;
+     height: 26px;
+     outline: none;
+     border: none;
+     font-size: 18px;
 }
