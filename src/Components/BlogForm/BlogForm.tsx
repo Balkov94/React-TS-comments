@@ -1,19 +1,14 @@
-import { debug } from "console";
-import { useRef, useState } from "react";
-import { json } from "stream/consumers";
+
+import { useState } from "react";
 import { IComment } from "../Comment/Comment";
-import CommentsWrapper, { IallComments } from "../CommentsWrapper/CommentsWrapper";
+import CommentsWrapper from "../CommentsWrapper/CommentsWrapper";
 import { CommentClass } from "../interfaces/classesAndInterfaces";
 import styles from "./BlogForm.module.css";
 
-
 // Local storage initial data ______________________________________________________
-let c1 = new CommentClass("first", "first content", "active", "01.01.2001", "02.02.2022")
-let c2 = new CommentClass("second", "second content", "active", "22.22.2002", "22.22.2022")
-let c3 = new CommentClass("third", "third content", "active", "03.03.2003", "02.02.2022")
-let commentsData = [
-     c1, c2, c3
-]
+let c1 = new CommentClass("remark-gfm (missing **BOLD** nad *Italic* dont know why)", "# GFM ## Autolink literals www.example.com, https://example.com, and contact@example.com. ## Footnote A note[^1] [^1]: Big note. ## Strikethrough ~one~ or ~~two~~ tildes.", "active", "Created on: 05:57:25 AM Sun Aug 14 2022", "Edited on: 06:01:25 AM Sun Aug 14 2022")
+let c2 = new CommentClass("Test comments", "content text", "active", "Created on: 07:57:17 AM Sun Aug 13 2022", "Created on: 07:57:17 AM Sun Aug 13 2022")
+let commentsData = [c1, c2];
 if (!localStorage.getItem("comments")) {
      localStorage.setItem("comments", JSON.stringify(commentsData));
 }
@@ -103,7 +98,7 @@ function BlogForm() {
           const comment: IComment = oldLocalStorage.find((c: IComment) => c.id === target)
           const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== target)
           comment.status = ((comment.status === "active") ? "suspended" : "active");
-          updatedLocalStorage.splice(commentIndex,0, comment);
+          updatedLocalStorage.splice(commentIndex, 0, comment);
           localStorage.setItem("comments", JSON.stringify(updatedLocalStorage));
 
           setComments(updatedLocalStorage)
@@ -125,12 +120,15 @@ function BlogForm() {
                     <form className={styles.form}>
                          <label htmlFor="title">Title</label>
                          <input value={title} onChange={handleTitle}
-                              type="text" name="title" id="title"  maxLength={80}/>
+                              type="text" name="title" id="title" maxLength={80} />
 
                          <label htmlFor="content">Content</label>
                          <textarea value={content} onChange={handleContent}
-                              name="content" id="content" cols={30} rows={5}  maxLength={512}></textarea>
-                         <button onClick={handleEditorAddComments}>Save</button>
+                              name="content" id="content" cols={30} rows={5} maxLength={512}>
+                         </textarea>
+                         <button onClick={handleEditorAddComments}> SAVE COMMENT</button>
+
+
                     </form>
                </div>
 

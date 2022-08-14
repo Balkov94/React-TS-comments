@@ -1,8 +1,10 @@
 .wrapper{
-     margin-top: 18px;
+     margin-top: 50px;
      text-align: center;
      width: 100%;
      height: fit-content;
+     display: flex;
+     flex-direction: column;
 }
 
 .wrapper h1{
@@ -14,9 +16,11 @@ h1.sectionTitle{
 }
 .filterContainer{
      padding:16px;
-     padding-bottom: 32px;
+     padding-bottom: 52px;
+     margin:auto;
 }
 .filterContainer select{
+     display: flex;
      text-align: center;  
      width: 250px;
      height: 26px;
@@ -24,3 +28,9 @@ h1.sectionTitle{
      border: none;
      font-size: 18px;
 }
+
+
+
+
+
+

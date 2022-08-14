@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IParentFunctions } from "../CommentsWrapper/CommentsWrapper";
 import { commentStatus } from "../interfaces/classesAndInterfaces";
-import styles from "./Comment.module.css"
+import styles from "./Comment.module.css";
+
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from "remark-gfm";
 
 export interface IComment {
      key?: number
@@ -16,7 +19,7 @@ export interface IComment {
 
 function Comment(props: IComment & IParentFunctions) {
      const [selected, setSelected] = useState(props.status)//active , suspended
-
+     
      const handleChangeCommentStatus = (event: any) => {
           setSelected(event.target.value);
           // lift the state up to the main parent
@@ -26,11 +29,10 @@ function Comment(props: IComment & IParentFunctions) {
 
 
      const handleEditComment = (target: number) => {
-          debugger;
           props.parentEditFunction(target);
           // main app is overflow-y auto !!! scrolllTO doesn't work
           // window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-          
+
 
      }
 
@@ -44,7 +46,10 @@ function Comment(props: IComment & IParentFunctions) {
                     <h1>{props.title}</h1>
                </div>
                <div className={styles.contentContainer}>
-                    <p>{props.content}</p>
+                    {/* <p>{props.content}</p> */}
+                    <ReactMarkdown  remarkPlugins={[remarkGfm]} >
+                        {props.content}
+                    </ReactMarkdown>
                </div>
 
                <div className={styles.radioBtnContainer}>
@@ -72,21 +77,21 @@ function Comment(props: IComment & IParentFunctions) {
                </div>
 
                <div className={styles.commentDatesContainer}>
-                         <span>{props.timeOfCreation}</span>
-                         {
-                              (props.timeOfCreation!==props.timeOfModification)?
-                             ( <span>{props.timeOfModification}</span>)
-                             :
-                             null
-                         }
-                        
+                    <span>{props.timeOfCreation}</span>
+                    {
+                         (props.timeOfCreation !== props.timeOfModification) ?
+                              (<span>{props.timeOfModification}</span>)
+                              :
+                              null
+                    }
+
                </div>
 
                <div className={styles.btnsContainer}>
-                    <button className={styles.commentEditBtn} 
-                    onClick={() => handleEditComment(props.id)}>Edit</button>
-                    <button className={styles.commentDelBtn} 
-                    onClick={() => handleDeleteComment(props.id)}>Delete</button>
+                    <button className={styles.commentEditBtn}
+                         onClick={() => handleEditComment(props.id)}>Edit</button>
+                    <button className={styles.commentDelBtn}
+                         onClick={() => handleDeleteComment(props.id)}>Delete</button>
                </div>
           </div>
      );

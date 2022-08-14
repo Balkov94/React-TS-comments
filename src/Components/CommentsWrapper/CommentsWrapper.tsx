@@ -3,7 +3,7 @@ import { Comment } from "../Comment/Comment";
 import styles from "./CommentsWrapper.module.css"
 
 import { IComment } from "../Comment/Comment";
-import { useState } from "react";
+import React, { useState } from "react";
 
 
 export interface IallComments {
@@ -16,12 +16,13 @@ export interface IParentFunctions {
      parentChangeCommentStatus(target?: number): void;
 }
 
+
 function CommentsWrapper(props: IallComments & IParentFunctions) {
      const [filter, setFilter] = useState("all");
 
      const handleFilterChange = (e: any) => {
           setFilter(e.target.value)
-
+       
      }
      return (
           <div className={styles.wrapper}>
@@ -33,9 +34,9 @@ function CommentsWrapper(props: IallComments & IParentFunctions) {
                          defaultValue={filter}
                          onChange={(e) => handleFilterChange(e)}
                     >
-                         <option value="all" >show all</option>
-                         <option value="active" defaultChecked>show active</option>
-                         <option value="suspended">show suspended</option>
+                         <option  className={styles.filterOptions}value="all" >show all</option>
+                         <option  className={styles.filterOptions} value="active" defaultChecked>show active</option>
+                         <option  className={styles.filterOptions}value="suspended">show suspended</option>
                     </select>
                </div>
 

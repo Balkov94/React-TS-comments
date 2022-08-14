@@ -13,8 +13,6 @@
      margin-bottom: 44px;
      background-color: rgb(75,70,109);
      opacity: 0.8;
-    
-
 }
 .titleContainer{
      padding-top: 12px;
@@ -27,8 +25,8 @@
      max-height: 80px;
 
      overflow: hidden;
-     word-wrap: break-word;
-     text-overflow: ellipsis;
+     word-wrap: normal;
+   
      font-style: italic;
      font-family: "fantasy";
     
@@ -88,7 +86,29 @@
      bottom: 4px;
      left: 20px;
      font-size: 14px;
+     display: flex;
+     flex-direction: row;
+     justify-content: flex-start;
+     align-items: flex-start;
+     gap: 0px 12px;
 }
-.commentDatesContainer span{
-     padding-left: 14px;
-}
+
+
+@media only screen and (max-width: 920px) {
+     .commentDatesContainer {
+       flex-direction: column;
+     }
+   }
+
+   @media only screen and (max-width: 600px) {
+     .commentWrapper {
+       zoom: 0.8;
+       width: 96%;
+     }
+   }
+
+   @media only screen and (max-width: 520px) {
+     .commentWrapper {
+       height: 200px;
+     }
+   }
