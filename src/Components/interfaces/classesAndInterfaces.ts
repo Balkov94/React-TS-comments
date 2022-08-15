@@ -3,9 +3,6 @@
 let idCounter = 0;
 if (localStorage.getItem("comments")) {
      let arr = JSON.parse(String(localStorage.getItem("comments")))
-
-     console.log(arr);
-     console.log(arr.length);
      idCounter = arr.length
 }
 //_________________________________________________________________

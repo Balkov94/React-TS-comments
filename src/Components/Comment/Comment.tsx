@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { IParentFunctions } from "../CommentsWrapper/CommentsWrapper";
 import { commentStatus } from "../interfaces/classesAndInterfaces";
 import styles from "./Comment.module.css";
@@ -17,22 +17,34 @@ export interface IComment {
 }
 
 
+// const Comment = forwardRef((props:IComment & IParentFunctions, currRef) => {
+//      // passing the ref to a DOM element, 
+//      // so that the parent has a reference to the DOM node
+
+
 function Comment(props: IComment & IParentFunctions) {
      const [selected, setSelected] = useState(props.status)//active , suspended
-     
-     const handleChangeCommentStatus = (event: any) => {
-          setSelected(event.target.value);
-          // lift the state up to the main parent
-          // to change the status in localStorage too
-          props.parentChangeCommentStatus(props.id);
-     };
-
+     // const [buttonStatus, setButtonStatus] = useState<boolean>(props.buttonStatus) //true , false
 
      const handleEditComment = (target: number) => {
           props.parentEditFunction(target);
+          props.parentAutoScroll(props.currRef)
+          // disable buttons
+          props.handeButtonStatus();
           // main app is overflow-y auto !!! scrolllTO doesn't work
           // window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
+          //disabbuttons until edition ends
+
+
+     }
+
+     const handleChangeCommentStatus = (event: any) => {
+          setSelected(event.target.value);
+          props.parentChangeCommentStatus(props.id);
+          // lift the state up to the main parent
+          // to change the status in localStorage and parent status TOO
+          // props.parentChangeCommentStatus(props.id);
 
      }
 
@@ -46,9 +58,8 @@ function Comment(props: IComment & IParentFunctions) {
                     <h1>{props.title}</h1>
                </div>
                <div className={styles.contentContainer}>
-                    {/* <p>{props.content}</p> */}
-                    <ReactMarkdown  remarkPlugins={[remarkGfm]} >
-                        {props.content}
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} >
+                         {props.content}
                     </ReactMarkdown>
                </div>
 
@@ -86,11 +97,13 @@ function Comment(props: IComment & IParentFunctions) {
                     }
 
                </div>
-
                <div className={styles.btnsContainer}>
-                    <button className={styles.commentEditBtn}
+                    {/* <button className={styles.commentDelBtnDiabled} */}
+                    <button className={styles[("commentEditBtn" + (props.buttonStatus ? 'Disabled' : ''))]}
+                         disabled={props.buttonStatus}
                          onClick={() => handleEditComment(props.id)}>Edit</button>
-                    <button className={styles.commentDelBtn}
+                    <button className={styles[("commentDelBtn" + (props.buttonStatus ? 'Disabled' : ''))]}
+                         disabled={props.buttonStatus}
                          onClick={() => handleDeleteComment(props.id)}>Delete</button>
                </div>
           </div>

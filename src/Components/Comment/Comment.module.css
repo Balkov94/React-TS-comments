@@ -69,6 +69,7 @@
      cursor: pointer;
 }
 
+
 .btnsContainer button:hover{
      background-color: rgb(57, 57, 57);
      
@@ -77,8 +78,22 @@
 .commentDelBtn{
      border-radius: 0px 0px 15px 0px;
 }
+.commentDelBtnDisabled{
+     border-radius: 0px 0px 15px 0px;
+     background-color: black;
+     color: red;
+     opacity: 0.7;
+     
+}
+
 .commentEditBtn{
      border-radius: 15px 0px 0px 0px;
+}
+.commentEditBtnDisabled{
+     border-radius: 15px 0px 0px 0px;
+     background-color: black;
+     color: red;
+     opacity: 0.7;
 }
 
 .commentDatesContainer{
@@ -100,14 +115,14 @@
      }
    }
 
-   @media only screen and (max-width: 600px) {
+   @media only screen and (max-width: 780px) {
      .commentWrapper {
        zoom: 0.8;
        width: 96%;
      }
    }
 
-   @media only screen and (max-width: 520px) {
+   @media only screen and (max-width: 580px) {
      .commentWrapper {
        height: 200px;
      }
