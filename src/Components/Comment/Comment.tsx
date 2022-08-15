@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import { useState } from "react";
 import { IParentFunctions } from "../CommentsWrapper/CommentsWrapper";
-import { commentStatus } from "../interfaces/classesAndInterfaces";
+import { commentStatus } from "../classes/commentClass";
 import styles from "./Comment.module.css";
-
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
+
 
 export interface IComment {
      key?: number
@@ -16,26 +16,17 @@ export interface IComment {
      timeOfModification: string,
 }
 
-
-// const Comment = forwardRef((props:IComment & IParentFunctions, currRef) => {
-//      // passing the ref to a DOM element, 
-//      // so that the parent has a reference to the DOM node
-
-
 function Comment(props: IComment & IParentFunctions) {
      const [selected, setSelected] = useState(props.status)//active , suspended
-     // const [buttonStatus, setButtonStatus] = useState<boolean>(props.buttonStatus) //true , false
 
      const handleEditComment = (target: number) => {
           props.parentEditFunction(target);
-          props.parentAutoScroll(props.currRef)
-          // disable buttons
+
+          // disable buttons until edition ends - main parent state
           props.handeButtonStatus();
-          // main app is overflow-y auto !!! scrolllTO doesn't work
-          // window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
-          //disabbuttons until edition ends
-
+          // when main app is overflow-y auto !!! scrollTO,react-scroll and other don't work
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
      }
 
@@ -53,6 +44,7 @@ function Comment(props: IComment & IParentFunctions) {
      }
 
      return (
+
           <div className={styles.commentWrapper}>
                <div className={styles.titleContainer}>
                     <h1>{props.title}</h1>
@@ -98,15 +90,17 @@ function Comment(props: IComment & IParentFunctions) {
 
                </div>
                <div className={styles.btnsContainer}>
-                    {/* <button className={styles.commentDelBtnDiabled} */}
                     <button className={styles[("commentEditBtn" + (props.buttonStatus ? 'Disabled' : ''))]}
                          disabled={props.buttonStatus}
-                         onClick={() => handleEditComment(props.id)}>Edit</button>
+                         onClick={() => handleEditComment(props.id)}>edit</button>
+
                     <button className={styles[("commentDelBtn" + (props.buttonStatus ? 'Disabled' : ''))]}
                          disabled={props.buttonStatus}
                          onClick={() => handleDeleteComment(props.id)}>Delete</button>
                </div>
-          </div>
+
+          </div >
+
      );
 }
 

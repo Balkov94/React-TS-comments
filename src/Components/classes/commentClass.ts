@@ -7,7 +7,6 @@ if (localStorage.getItem("comments")) {
 }
 //_________________________________________________________________
 export type commentStatus = "active" | "suspended"
-
 export class CommentClass {
 
      static idCounter: number = idCounter;
@@ -28,5 +27,7 @@ export class CommentClass {
 
      }
 }
+
+
 
 

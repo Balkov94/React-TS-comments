@@ -20,6 +20,7 @@ h1.sectionTitle{
      margin:auto;
 }
 .filterContainer select{
+     background-color: rgb(59,67,114);
      display: flex;
      text-align: center;  
      width: 250px;
@@ -28,6 +29,9 @@ h1.sectionTitle{
      border: none;
      font-size: 18px;
 }
+
+
+
 
 
 

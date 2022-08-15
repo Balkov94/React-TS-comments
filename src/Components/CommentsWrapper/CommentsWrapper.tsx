@@ -1,10 +1,8 @@
 
 import { Comment } from "../Comment/Comment";
 import styles from "./CommentsWrapper.module.css"
-
 import { IComment } from "../Comment/Comment";
-import React, { forwardRef, useState } from "react";
-
+import { useState } from "react";
 
 export interface IallComments {
      data: IComment[];
@@ -14,8 +12,6 @@ export interface IParentFunctions {
      parentDeleteFunction(target?: number): void;
      parentEditFunction(target?: number): void;
      parentChangeCommentStatus(target?: number): void;
-     parentAutoScroll(ref?:any):void;
-     currRef:any
      buttonStatus:boolean
      handeButtonStatus():void;
 }
@@ -55,16 +51,15 @@ function CommentsWrapper(props: IallComments & IParentFunctions) {
                                    status={c.status}
                                    timeOfCreation={c.timeOfCreation}
                                    timeOfModification={c.timeOfModification}
+
                                    parentDeleteFunction={props.parentDeleteFunction}
                                    parentEditFunction={props.parentEditFunction}
                                    parentChangeCommentStatus={props.parentChangeCommentStatus}
-                                   parentAutoScroll={props.parentAutoScroll}
-                                   currRef={props.currRef}
+                                          
                                    buttonStatus={props.buttonStatus}
                                    handeButtonStatus={props.handeButtonStatus}
                               ></Comment>
                          })
-
                }
           </div>
      );

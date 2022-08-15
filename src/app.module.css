@@ -1,11 +1,12 @@
 .mainAppDiv{
+     background-color:rgb(33,27,52);
      background-image: url("./images/main-wallpeper.jpg");
      background-repeat: no-repeat;
-     /* background-repeat: repeat-y; */
-     background-size: cover;
+     background-size: contain;
      width: 100%;
-     height: 100vh;
-     /* height: fit-content; */
-     overflow-y: auto;
+     height: fit-content;
+     /* height: 100vh; */
+     /* overflow-y: auto; */
+     /* SCROLL to TOP BUG - non-pasive listener on texarea, stops responding effects on click */
      
 }

@@ -1,10 +1,8 @@
-
-import React, { useEffect, useRef, useState, } from "react";
+import { useState, } from "react";
 import { IComment } from "../Comment/Comment";
 import CommentsWrapper from "../CommentsWrapper/CommentsWrapper";
-import { CommentClass } from "../interfaces/classesAndInterfaces";
+import { CommentClass } from "../classes/commentClass";
 import styles from "./BlogForm.module.css";
-// import {PassiveListener} from 'react-event-injector';
 
 // Local storage initial data ______________________________________________________
 let c1 = new CommentClass("remark-gfm (missing **BOLD** nad *Italic* dont know why)", "# GFM ## Autolink literals www.example.com, https://example.com, and contact@example.com. ## Footnote A note[^1] [^1]: Big note. ## Strikethrough ~one~ or ~~two~~ tildes.", "active", "Created on: 05:57:25 AM Sun Aug 14 2022", "Edited on: 06:01:25 AM Sun Aug 14 2022")
@@ -19,46 +17,25 @@ else {
 //____________________________________________________________________________________
 
 function BlogForm() {
-     // get data from localStorage
      const [comments, setComments] = useState(commentsData);
      const [title, setTitle] = useState("");
      const [content, setContent] = useState("");
      const [buttonStatus, setButtonStatus] = useState(false);
 
-     //focus on click _____________________________________
-     //!!! after re render doesnt work
-     const myRef = useRef<null | HTMLDivElement>(null);
-     const executeScroll = ((ref?: any) => {
-          console.log(ref);
-          // ****   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-          ref.current.scrollIntoView(({ block: 'end', behavior: 'smooth' }));
-          //get ref from local
-
-          // let ref1=JSON.parse(String(localStorage.getItem("ref")));
-          // // const form = document.getElementById( 'form' );
-          // //  form?.scrollIntoView(({ block: 'end', behavior: 'smooth' }));
-          // ref1.scrollIntoView(({ block: 'end', behavior: 'smooth' }));
-
-     })
-
-     //_____________________________________________________
 
      const handeButtonStatus = () => {
-          setButtonStatus(buttonStatus => (!buttonStatus))   
+          setButtonStatus(buttonStatus => (!buttonStatus))
      }
-
 
      const handleTitle = (event: any) => {
           setTitle(event.target.value);
      }
-     const handleContent = (event: any) => {
-          // e.stopPropagation();
-          // e.nativeEvent.stopImmediatePropagation();
 
+     const handleComments = (event: any) => {
           setContent(event.target.value);
      }
 
-     const handleEditorAddComments = (event: any) => {
+     const handleEditAddComments = (event: any) => {
           event.preventDefault();
           // check new comment or editComment_______________________
           const editComment: IComment = JSON.parse(String(localStorage.getItem("editComment")));
@@ -74,7 +51,6 @@ function BlogForm() {
                localStorage.setItem("comments", JSON.stringify(oldLocalStorage));
                //update comments state
                setComments([updatedComment, ...comments]);
-              
                // activate comment button after edition
                handeButtonStatus();
 
@@ -109,7 +85,7 @@ function BlogForm() {
           localStorage.setItem("editComment", (JSON.stringify(editedComment)));
           setTitle(editedComment.title);
           setContent(editedComment.content);
-         
+
 
      }
 
@@ -144,31 +120,25 @@ function BlogForm() {
 
      return (
           <>
-               <div ref={myRef} className={styles.formWrapper} id="form">
+               <div className={styles.formWrapper}>
                     <form className={styles.form}>
                          <label htmlFor="title">Title</label>
-                         <input value={title} onChange={handleTitle}
+                         <input value={title} onChange={handleTitle} placeholder="name"
                               type="text" name="title" id="title" maxLength={80} />
 
                          <label htmlFor="content">Content</label>
-                         {/* passive event listeners probelm */}
-                         <textarea value={content} onChange={handleContent}
+                         {/* non-passive event listeners probelm !Don't know* how to fix  */}
+                         <textarea value={content} onChange={handleComments} placeholder="Enter your text here"
                               name="content" id="content" cols={30} rows={5} maxLength={512}>
                          </textarea>
-
-
-                         
-                         <button onClick={handleEditorAddComments}> SAVE COMMENT</button>
+                         <button onClick={handleEditAddComments}> SAVE COMMENT</button>
                     </form>
                </div>
-
                <CommentsWrapper
                     data={comments}
                     parentDeleteFunction={deleteComment}
                     parentEditFunction={editComment}
                     parentChangeCommentStatus={changeCommentStatus}
-                    parentAutoScroll={executeScroll}
-                    currRef={myRef}
                     buttonStatus={buttonStatus}
                     handeButtonStatus={handeButtonStatus}
                ></CommentsWrapper>
