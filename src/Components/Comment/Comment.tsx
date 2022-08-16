@@ -5,7 +5,6 @@ import styles from "./Comment.module.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
 
-
 export interface IComment {
      key?: number
      id: number
@@ -21,10 +20,8 @@ function Comment(props: IComment & IParentFunctions) {
 
      const handleEditComment = (target: number) => {
           props.parentEditFunction(target);
-
           // disable buttons until edition ends - main parent state
           props.handeButtonStatus();
-
           // when main app is overflow-y auto !!! scrollTO,react-scroll and other don't work
           window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
@@ -97,8 +94,8 @@ function Comment(props: IComment & IParentFunctions) {
                     <button className={styles[("commentDelBtn" + (props.buttonStatus ? 'Disabled' : ''))]}
                          disabled={props.buttonStatus}
                          onClick={() => handleDeleteComment(props.id)}>Delete</button>
-               </div>
 
+               </div>
           </div >
 
      );

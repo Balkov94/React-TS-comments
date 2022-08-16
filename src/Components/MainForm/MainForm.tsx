@@ -2,10 +2,10 @@ import { useState, } from "react";
 import { IComment } from "../Comment/Comment";
 import CommentsWrapper from "../CommentsWrapper/CommentsWrapper";
 import { CommentClass } from "../classes/commentClass";
-import styles from "./BlogForm.module.css";
+import styles from "./MainForm.module.css";
 
 // Local storage initial data ______________________________________________________
-let c1 = new CommentClass("remark-gfm (missing **BOLD** nad *Italic* dont know why)", "# GFM ## Autolink literals www.example.com, https://example.com, and contact@example.com. ## Footnote A note[^1] [^1]: Big note. ## Strikethrough ~one~ or ~~two~~ tildes.", "active", "Created on: 05:57:25 AM Sun Aug 14 2022", "Edited on: 06:01:25 AM Sun Aug 14 2022")
+let c1 = new CommentClass("remark-gfm (missing **BOLD** nad *Italic* font-styles)", "# GFM ## Autolink literals www.example.com, https://example.com, and contact@example.com. ## Footnote A note[^1] [^1]: Big note. ## Strikethrough ~one~ or ~~two~~ tildes.", "active", "Created on: 05:57:25 AM Sun Aug 14 2022", "Edited on: 06:01:25 AM Sun Aug 14 2022")
 let c2 = new CommentClass("Test comments", "content text", "active", "Created on: 07:57:17 AM Sun Aug 13 2022", "Created on: 07:57:17 AM Sun Aug 13 2022")
 let commentsData = [c1, c2];
 if (!localStorage.getItem("comments")) {
@@ -120,6 +120,9 @@ function BlogForm() {
 
      return (
           <>
+
+
+               {/* _______________________________________________________________________ */}
                <div className={styles.formWrapper}>
                     <form className={styles.form}>
                          <label htmlFor="title">Title</label>
@@ -128,10 +131,13 @@ function BlogForm() {
 
                          <label htmlFor="content">Content</label>
                          {/* non-passive event listeners probelm !Don't know* how to fix  */}
-                         <textarea value={content} onChange={handleComments} placeholder="Enter your text here"
+                         <textarea value={content} onChange={handleComments} placeholder="Type your text here..."
                               name="content" id="content" cols={30} rows={5} maxLength={512}>
                          </textarea>
-                         <button onClick={handleEditAddComments}> SAVE COMMENT</button>
+                         <button className={styles[("formBtn" + ((title.trim().length < 3 || content.trim().length < 3) ? 'Disabled' : 'Active'))]}
+                              onClick={handleEditAddComments}
+                              disabled={(title.trim().length < 3 || content.trim().length < 3) ? true : false}
+                         > SAVE COMMENT</button>
                     </form>
                </div>
                <CommentsWrapper
