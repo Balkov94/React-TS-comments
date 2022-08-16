@@ -2,7 +2,9 @@
      background-color:rgb(33,27,52);
      background-image: url("./images/main-wallpeper.jpg");
      background-repeat: no-repeat;
-     background-size: contain;
+     background-size: cover;
+     /* background-position: top; */
+     background-attachment: fixed;
      width: 100%;
      height: fit-content;
      /* height: 100vh; */

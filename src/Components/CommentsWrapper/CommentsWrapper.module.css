@@ -30,6 +30,16 @@ h1.sectionTitle{
      font-size: 18px;
 }
 
+.noCommentsDiv{
+     width: 100%;
+     height: fit-content;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     font-size: 26px;
+     padding-top: 0px;
+     padding-bottom: 40px;
+}
 
 
 

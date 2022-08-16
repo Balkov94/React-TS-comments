@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { IParentFunctions } from "../CommentsWrapper/CommentsWrapper";
 import { commentStatus } from "../classes/commentClass";
 import styles from "./Comment.module.css";
@@ -18,8 +18,8 @@ export interface IComment {
 function Comment(props: IComment & IParentFunctions) {
      const [selected, setSelected] = useState(props.status)//active , suspended
 
-     const handleEditComment = (target: number) => {
-          props.parentEditFunction(target);
+     const handleEditComment = (commentID: number) => {
+          props.parentEditFunction(commentID);
           // disable buttons until edition ends - main parent state
           props.handeButtonStatus();
           // when main app is overflow-y auto !!! scrollTO,react-scroll and other don't work
@@ -27,8 +27,8 @@ function Comment(props: IComment & IParentFunctions) {
 
      }
 
-     const handleChangeCommentStatus = (event: any) => {
-          setSelected(event.target.value);
+     const handleChangeCommentStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+          setSelected((event.target.value) as commentStatus);
           props.parentChangeCommentStatus(props.id);
           // lift the state up to the main parent
           // to change the status in localStorage and parent status TOO
@@ -36,8 +36,8 @@ function Comment(props: IComment & IParentFunctions) {
 
      }
 
-     const handleDeleteComment = (targetID: number) => {
-          props.parentDeleteFunction(targetID);
+     const handleDeleteComment = (commentID: number) => {
+          props.parentDeleteFunction(commentID);
      }
 
      return (

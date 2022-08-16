@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import React, { useState, } from "react";
 import { IComment } from "../Comment/Comment";
 import CommentsWrapper from "../CommentsWrapper/CommentsWrapper";
 import { CommentClass } from "../classes/commentClass";
@@ -27,15 +27,15 @@ function BlogForm() {
           setButtonStatus(buttonStatus => (!buttonStatus))
      }
 
-     const handleTitle = (event: any) => {
+     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
           setTitle(event.target.value);
      }
 
-     const handleComments = (event: any) => {
+     const handleContent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setContent(event.target.value);
      }
 
-     const handleEditAddComments = (event: any) => {
+     const handleEditAddComments = (event: React.FormEvent) => {
           event.preventDefault();
           // check new comment or editComment_______________________
           const editComment: IComment = JSON.parse(String(localStorage.getItem("editComment")));
@@ -70,16 +70,16 @@ function BlogForm() {
           setContent("");
      }
 
-     const editComment = (target?: number): void => {
+     const editComment = (commentID: number): void => {
           const editedComment: IComment = JSON.parse(String(localStorage.getItem("comments")))
-               .find((c: IComment) => c.id === target)
+               .find((c: IComment) => c.id === commentID)
 
           // console.log(editedComment); //entire old obj
           // delete OLD edited comment
           const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
-          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== target)
+          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== commentID)
           localStorage.setItem("comments", JSON.stringify(updatedLocalStorage));
-          setComments(comments => comments.filter(c => c.id !== target))
+          setComments(comments => comments.filter(c => c.id !== commentID))
 
           // ***** save edit commen in localStorage to reuse form
           localStorage.setItem("editComment", (JSON.stringify(editedComment)));
@@ -89,18 +89,18 @@ function BlogForm() {
 
      }
 
-     const deleteComment = (target?: number): void => {
+     const deleteComment = (commentID: number): void => {
           const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
-          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== target)
+          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== commentID)
           localStorage.setItem("comments", JSON.stringify(updatedLocalStorage));
-          setComments(comments => comments.filter(c => c.id !== target))
+          setComments(comments => comments.filter(c => c.id !== commentID))
      }
 
-     const changeCommentStatus = (target?: number): void => {
+     const changeCommentStatus = (commentID: number): void => {
           const oldLocalStorage = JSON.parse(String(localStorage.getItem("comments")));
-          const commentIndex = oldLocalStorage.findIndex((comment: IComment) => comment.id === target)
-          const comment: IComment = oldLocalStorage.find((c: IComment) => c.id === target)
-          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== target)
+          const commentIndex = oldLocalStorage.findIndex((comment: IComment) => comment.id === commentID)
+          const comment: IComment = oldLocalStorage.find((c: IComment) => c.id === commentID)
+          const updatedLocalStorage = oldLocalStorage.filter((c: IComment) => c.id !== commentID)
           comment.status = ((comment.status === "active") ? "suspended" : "active");
           updatedLocalStorage.splice(commentIndex, 0, comment);
           localStorage.setItem("comments", JSON.stringify(updatedLocalStorage));
@@ -124,19 +124,20 @@ function BlogForm() {
 
                {/* _______________________________________________________________________ */}
                <div className={styles.formWrapper}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={handleEditAddComments}>
                          <label htmlFor="title">Title</label>
                          <input value={title} onChange={handleTitle} placeholder="name"
                               type="text" name="title" id="title" maxLength={80} />
 
                          <label htmlFor="content">Content</label>
-                         {/* non-passive event listeners probelm !Don't know* how to fix  */}
-                         <textarea value={content} onChange={handleComments} placeholder="Type your text here..."
+                         <textarea value={content} onChange={handleContent} placeholder="Type your text here..."
                               name="content" id="content" cols={30} rows={5} maxLength={512}>
                          </textarea>
                          <button className={styles[("formBtn" + ((title.trim().length < 3 || content.trim().length < 3) ? 'Disabled' : 'Active'))]}
-                              onClick={handleEditAddComments}
-                              disabled={(title.trim().length < 3 || content.trim().length < 3) ? true : false}
+                              type="submit"
+                              // onClick={handleEditAddComments}
+                              disabled={(title.trim().length < 3 || content.trim().length < 3)
+                                   ? true : false}
                          > SAVE COMMENT</button>
                     </form>
                </div>
